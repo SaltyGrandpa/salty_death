@@ -32,8 +32,8 @@ AddEventHandler('baseevents:onPlayerKilled', function(killerId, data)
 end)
 
 AddEventHandler("playerSpawned", function()
-	ESX.TriggerServerCallback('salty_death:isDead', function(isDead)
-		if isDead then
+	ESX.TriggerServerCallback('salty_death:isDead', function(isDeadDB)
+		if isDeadDB then
 			killPlayer()
 		end
 	end)
