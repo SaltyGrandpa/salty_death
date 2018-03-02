@@ -1,5 +1,6 @@
 ESX = nil
-isDead = false
+local isDead = false
+local firstSpawn = true
 
 Citizen.CreateThread(function()
     while ESX == nil do
@@ -32,11 +33,14 @@ AddEventHandler('baseevents:onPlayerKilled', function(killerId, data)
 end)
 
 AddEventHandler("playerSpawned", function()
-	ESX.TriggerServerCallback('salty_death:isDead', function(isDeadDB)
-		if isDeadDB then
-			killPlayer()
-		end
-	end)
+	if firstSpawn then
+		ESX.TriggerServerCallback('salty_death:isDead', function(isDeadDB)
+			if isDeadDB then
+				killPlayer()
+			end
+		end)
+		firstSpawn = false
+	end
 end)
 
 Citizen.CreateThread(function()
