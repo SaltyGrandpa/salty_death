@@ -6,23 +6,27 @@ TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
 RegisterServerEvent('salty_death:updatePlayer')
 AddEventHandler('salty_death:updatePlayer', function(dead)
-    local xPlayer = ESX.GetPlayerFromId(source)
-    local identifier = xPlayer.identifier
-	local deathStatus = 0
+    local _source = source
+    local xPlayer = ESX.GetPlayerFromId(_source)
+    if xPlayer ~= nil then
+	    local identifier = xPlayer.identifier
+		local deathStatus = 0
 
-	if dead then
-		deathStatus = 1
-	end
-	
-	MySQL.Async.execute("UPDATE users SET isDead = @deathStatus WHERE identifier = @identifier", {
-		['@deathStatus'] = deathStatus, ['@identifier'] = identifier
-	})
+		if dead then
+			deathStatus = 1
+		end
+
+		MySQL.Async.execute("UPDATE users SET isDead = @deathStatus WHERE identifier = @identifier", {
+			['@deathStatus'] = deathStatus, ['@identifier'] = identifier
+		})
+    end
 end)
 
 ESX.RegisterServerCallback('salty_death:isDead', function (source, cb)
-	local xPlayer = ESX.GetPlayerFromId(source)
-    local identifier = xPlayer.identifier
-	
+    local _source = source
+    local xPlayer = ESX.GetPlayerFromId(_source)
+    if xPlayer ~= nil then
+	    local identifier = xPlayer.identifier
 	MySQL.Async.fetchAll("SELECT * FROM users WHERE identifier = @identifier", {
 		  ['@identifier'] = identifier
 		},function(result)
@@ -38,6 +42,7 @@ ESX.RegisterServerCallback('salty_death:isDead', function (source, cb)
 				cb(false)
 			end
 		end
-	)
+		)
+	end
 end)
 
