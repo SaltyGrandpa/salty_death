@@ -2,10 +2,11 @@
 Adds protection against combat logging by saving death status to the database.
 
 ## Requirements
-EssentialMode Extended, MySQL Async
+Base Events, EssentialMode Extended, MySQL Async.
 
 ## Instructions
-Downloads folder, modify database, start the resource.
+Download the folder, modify the database, start the resource. 
+The resource needs to be started after es_extended and basesevents.
 
 ## Database Modification
 ```
