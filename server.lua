@@ -32,7 +32,7 @@ ESX.RegisterServerCallback('salty_death:isDead', function (source, cb)
 		},function(result)
 			if result[1] ~= nil then
 				local user = result[1]
-				local deathStatus = user['isDead']
+				local deathStatus = tonumber(user['isDead'])
 				cb(deathStatus == 0)
 			else
 				cb(false)
